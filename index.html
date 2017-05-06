@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.puzzle{
+				position: relative;
+				height: 400px;
+			}
+			.puzzle-background{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 640px;
+				height: 400px;
+				background: url(img/060244074200.jpg) no-repeat center center;
+				background-size: contain;
+			}
+			.puzzle-without-piece{
+				position: absolute;
+				left: 576px;
+				top: 128px;
+				z-index: 900;
+				width: 64px;
+				height: 64px;
+				border: 1px solid #dcdcdc;
+				background: url(img/060244074200.jpg) no-repeat -576px -128px;
+				opacity: 0.5;
+			}
+			.puzzle-the-piece{
+				position: absolute;
+				left: 0px;
+				top: 128px;
+				z-index: 1000;
+				width: 64px;
+				height: 64px;
+				background: url(img/060244074200.jpg) no-repeat -576px -128px;
+			}
+			
+			.slider-pathway{
+				position: relative;
+				width: 640px;
+				height: 20px;
+				margin-top: 30px;
+				background: black;
+				border-radius: 10px;
+			}
+			.slider-block{
+				position: absolute;
+				left: 0;
+				top: -10px;
+				width: 40px;
+				height: 40px;
+				background: yellow;
+				border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="puzzle">
+			<div class="puzzle-background"></div>
+			<div class="puzzle-without-piece"></div>
+			<div class="puzzle-the-piece"></div>
+		</div>
+		<div class="slider-pathway">
+			<div class="slider-block"></div>
+		</div>
+		
+		
+		<script>
+			var $puzzleThePiece = document.getElementsByClassName('puzzle-without-piece')[0];
+			var $puzzleThePiece = document.getElementsByClassName('puzzle-the-piece')[0];
+			var $sliderBlock = document.getElementsByClassName('slider-block')[0];
+			var $sliderPathway = document.getElementsByClassName('slider-pathway')[0];
+			
+			
+			var blockStartPosition = 0;
+			var mouseStartPosition = 0;
+			$sliderPathway.addEventListener('mousedown',function (ev) {
+				console.log(getComputedStyle($sliderBlock).left)
+				blockStartPosition = ev.clientX;
+				$sliderBlock.style.left = parseInt(parseInt(ev.clientX) - parseInt(blockStartPosition))+'px'
+				$sliderPathway.addEventListener('mousemove',function (ev) {
+					$sliderBlock.style.left = parseInt(parseInt(ev.clientX) - parseInt(blockStartPosition))+'px'
+				}, false)
+			}, false)
+			
+			$sliderPathway.addEventListener('mouseup',function (ev) {
+				blockStartPosition = ev.clientX;
+//				$sliderBlock.style.left = parseInt(parseInt(ev.clientX) - parseInt(mouseStartPosition))+'px'
+			}, false)
+			
+			
+		</script>
+	</body>
+</html>
