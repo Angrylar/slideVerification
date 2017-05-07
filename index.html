@@ -4,6 +4,11 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<style>
+			.alert-win{
+				width: 700px;
+				height: 600px;
+				background: green;
+			}
 			.puzzle{
 				position: relative;
 				height: 400px;
@@ -26,7 +31,7 @@
 				height: 64px;
 				border: 1px solid #dcdcdc;
 				background: url(img/060244074200.jpg) no-repeat -576px -128px;
-				opacity: 0.5;
+				opacity: 0.7;
 			}
 			.puzzle-the-piece{
 				position: absolute;
@@ -58,39 +63,50 @@
 		</style>
 	</head>
 	<body>
-		<div class="puzzle">
-			<div class="puzzle-background"></div>
-			<div class="puzzle-without-piece"></div>
-			<div class="puzzle-the-piece"></div>
-		</div>
-		<div class="slider-pathway">
-			<div class="slider-block"></div>
+		<div class="alert-win">
+			<div class="puzzle">
+				<div class="puzzle-background"></div>
+				<div class="puzzle-without-piece"></div>
+				<div class="puzzle-the-piece"></div>
+			</div>
+			<div class="slider-pathway">
+				<div class="slider-block" style="left: 0;"></div>
+			</div>
 		</div>
 		
 		
 		<script>
-			var $puzzleThePiece = document.getElementsByClassName('puzzle-without-piece')[0];
+			var $alertWin = document.getElementsByClassName('alert-win')[0];
+			var $puzzleWithoutPiece = document.getElementsByClassName('puzzle-without-piece')[0];
 			var $puzzleThePiece = document.getElementsByClassName('puzzle-the-piece')[0];
 			var $sliderBlock = document.getElementsByClassName('slider-block')[0];
 			var $sliderPathway = document.getElementsByClassName('slider-pathway')[0];
 			
 			
-			var blockStartPosition = 0;
-			var mouseStartPosition = 0;
-			$sliderPathway.addEventListener('mousedown',function (ev) {
-				console.log(getComputedStyle($sliderBlock).left)
-				blockStartPosition = ev.clientX;
-				$sliderBlock.style.left = parseInt(parseInt(ev.clientX) - parseInt(blockStartPosition))+'px'
-				$sliderPathway.addEventListener('mousemove',function (ev) {
-					$sliderBlock.style.left = parseInt(parseInt(ev.clientX) - parseInt(blockStartPosition))+'px'
-				}, false)
-			}, false)
+			var blockStartPosition;
+			var mouseStartPosition;
+			$sliderPathway.onmousedown = function (ev) {
+				blockStartPosition = $sliderBlock.style.left;
+				mouseStartPosition = ev.clientX;
+				console.log("blockStartPosition",blockStartPosition)
+				console.log("mouseStartPosition",mouseStartPosition)
+				$sliderPathway.onmousemove = function (event) {
+					var arg = event.clientX - parseInt(mouseStartPosition);					
+					if (arg > 640) {
+						arg = 640;
+					} else if (arg < 0) {
+						arg = 0;
+					}
+					$sliderBlock.style.left = arg + 'px';
+					$puzzleThePiece.style.left = arg + 'px';
+				}
+			}
 			
-			$sliderPathway.addEventListener('mouseup',function (ev) {
-				blockStartPosition = ev.clientX;
-//				$sliderBlock.style.left = parseInt(parseInt(ev.clientX) - parseInt(mouseStartPosition))+'px'
-			}, false)
-			
+			$sliderPathway.onmouseup = function (ev) {
+				$sliderPathway.onmousemove = null;
+				$sliderBlock.style.left = 0;
+				$puzzleThePiece.style.left = 0;
+			}
 			
 		</script>
 	</body>
