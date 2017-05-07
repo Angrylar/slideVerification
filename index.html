@@ -60,6 +60,14 @@
 				background: yellow;
 				border-radius: 50%;
 			}
+			.sliderish{
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				
+				width: 100%;
+				height: 200px;
+			}
 		</style>
 	</head>
 	<body>
@@ -69,9 +77,12 @@
 				<div class="puzzle-without-piece"></div>
 				<div class="puzzle-the-piece"></div>
 			</div>
-			<div class="slider-pathway">
-				<div class="slider-block" style="left: 0;"></div>
+			<div class="sliderish">
+				<div class="slider-pathway">
+					<div class="slider-block" style="left: 0;"></div>
+				</div>
 			</div>
+				
 		</div>
 		
 		
@@ -81,16 +92,16 @@
 			var $puzzleThePiece = document.getElementsByClassName('puzzle-the-piece')[0];
 			var $sliderBlock = document.getElementsByClassName('slider-block')[0];
 			var $sliderPathway = document.getElementsByClassName('slider-pathway')[0];
-			
+			var $sliderish = document.getElementsByClassName('sliderish')[0];
 			
 			var blockStartPosition;
 			var mouseStartPosition;
-			$sliderPathway.onmousedown = function (ev) {
+			$sliderish.onmousedown = function (ev) {
 				blockStartPosition = $sliderBlock.style.left;
 				mouseStartPosition = ev.clientX;
 				console.log("blockStartPosition",blockStartPosition)
 				console.log("mouseStartPosition",mouseStartPosition)
-				$sliderPathway.onmousemove = function (event) {
+				$sliderish.onmousemove = function (event) {
 					var arg = event.clientX - parseInt(mouseStartPosition);					
 					if (arg > 640) {
 						arg = 640;
@@ -102,8 +113,8 @@
 				}
 			}
 			
-			$sliderPathway.onmouseup = function (ev) {
-				$sliderPathway.onmousemove = null;
+			$sliderish.onmouseup = function (ev) {
+				$sliderish.onmousemove = null;
 				$sliderBlock.style.left = 0;
 				$puzzleThePiece.style.left = 0;
 			}
